@@ -213,6 +213,8 @@ class AICSpaceMouseTeleopConfig(TeleoperatorConfig):
     operator_position_front: bool = True
     device: str | None = None  # only needed for multiple space mice
     command_scaling: float = 0.1
+    # Raw axis is in [-1, 1]; raise this if the arm drifts at rest (sensor bias / noise).
+    deadband: float = 0.05
 
 
 class AICSpaceMouseTeleop(Teleoperator):
@@ -261,7 +263,7 @@ class AICSpaceMouseTeleop(Teleoperator):
                 "Calibration not supported, ensure the robot is calibrated before running teleop."
             )
 
-        self._device_open_success = pyspacemouse.open(
+        self._device = pyspacemouse.open(
             dof_callback=None,
             # button_callback_arr=[
             #     pyspacemouse.ButtonCallback([0], self._button_callback),  # Button 1
@@ -288,7 +290,7 @@ class AICSpaceMouseTeleop(Teleoperator):
     def configure(self) -> None:
         pass
 
-    def apply_deadband(self, value, threshold=0.02):
+    def apply_deadband(self, value: float, threshold: float) -> float:
         return value if abs(value) > threshold else 0.0
 
     def get_action(self) -> dict[str, Any]:
@@ -296,13 +298,14 @@ class AICSpaceMouseTeleop(Teleoperator):
             raise DeviceNotConnectedError()
 
         state = self._device.read()
+        db = self.config.deadband
 
-        clean_x = self.apply_deadband(float(state.x))
-        clean_y = self.apply_deadband(float(state.y))
-        clean_z = self.apply_deadband(float(state.z))
-        clean_roll = self.apply_deadband(float(state.roll))
-        clean_pitch = self.apply_deadband(float(state.pitch))
-        clean_yaw = self.apply_deadband(float(state.yaw))
+        clean_x = self.apply_deadband(float(state.x), db)
+        clean_y = self.apply_deadband(float(state.y), db)
+        clean_z = self.apply_deadband(float(state.z), db)
+        clean_roll = self.apply_deadband(float(state.roll), db)
+        clean_pitch = self.apply_deadband(float(state.pitch), db)
+        clean_yaw = self.apply_deadband(float(state.yaw), db)
 
         twist_msg = Twist()
         twist_msg.linear.x = clean_x**1 * self.config.command_scaling

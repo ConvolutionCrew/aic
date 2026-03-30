@@ -1,0 +1,13 @@
+[Unit]
+Description=Bind NVIDIA GPU to vfio-pci for VM passthrough
+After=systemd-modules-load.service local-fs.target
+Before=display-manager.service graphical.target
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/vfio_claim_gpu.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
