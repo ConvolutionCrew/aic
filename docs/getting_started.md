@@ -164,14 +164,21 @@ See [Scene Description](./scene_description.md) for more details about the simul
 
 ### Step 3: Run an Example Policy
 
-With the simulation environment running (Step 2), run the following policy:
+With the simulation environment running (Step 2), **in a new terminal on the host** run the following policy. The model must use the same Zenoh router as the eval container (connect to `tcp/localhost:7447`); if you run from the host, set `ZENOH_SESSION_CONFIG_URI` to the repo’s Zenoh config:
+
 ```bash
 cd ~/ws_aic/src/aic
+# If running from host (same machine as eval container), point to the Zenoh config so the model connects to the router in the container
+export ZENOH_SESSION_CONFIG_URI="$(pwd)/docker/aic_eval/aic_zenoh_config.json5"
 pixi run ros2 run aic_model aic_model --ros-args -p use_sim_time:=true -p policy:=aic_example_policies.ros.WaveArm
 ```
 
 > [!NOTE]
 > Because `pixi run` creates its own environment and runs `aic_model` inside it, the `pixi run` invocation can occur outside Docker and distrobox. It is typically easier, faster, and simpler to run it outside the container.
+
+If your repo is elsewhere, use the full path to `docker/aic_eval/aic_zenoh_config.json5` in that repo.
+
+**Important:** The engine waits only **30 seconds** (sim time) for the `aic_model` node. Start the model **within 30 seconds** of the engine starting (i.e. shortly after you see Gazebo and “No node with name 'aic_model' found. Retrying...” in the container). If you start the model later, the engine may have already timed out and you will see no further progress.
 
 Once the `aic_model` node starts, the AIC engine spawns a task board and a gripper-attached cable in the Gazebo window. The eval container terminal will then track three successive trials and display their scores. See [Scoring](./scoring.md) for more details.
 

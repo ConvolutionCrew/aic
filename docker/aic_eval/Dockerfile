@@ -7,7 +7,24 @@ RUN curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyri
 # Install dependencies
 RUN mkdir -p /ws_aic/src/aic
 COPY --chmod=644 aic.repos /ws_aic/src/aic/
-COPY --chmod=u=rwX,go=rX --parents **/package.xml /ws_aic/src/aic
+COPY --chmod=u=rwX,go=rX my_aic_policy/package.xml /ws_aic/src/aic/my_aic_policy/
+COPY --chmod=u=rwX,go=rX aic_interfaces/aic_task_interfaces/package.xml /ws_aic/src/aic/aic_interfaces/aic_task_interfaces/
+COPY --chmod=u=rwX,go=rX aic_scoring/package.xml /ws_aic/src/aic/aic_scoring/
+COPY --chmod=u=rwX,go=rX aic_model/package.xml /ws_aic/src/aic/aic_model/
+COPY --chmod=u=rwX,go=rX aic_utils/aic_mujoco/package.xml /ws_aic/src/aic/aic_utils/aic_mujoco/
+COPY --chmod=u=rwX,go=rX aic_utils/aic_teleoperation/package.xml /ws_aic/src/aic/aic_utils/aic_teleoperation/
+COPY --chmod=u=rwX,go=rX aic_utils/lerobot_robot_aic/package.xml /ws_aic/src/aic/aic_utils/lerobot_robot_aic/
+COPY --chmod=u=rwX,go=rX aic_bringup/package.xml /ws_aic/src/aic/aic_bringup/
+COPY --chmod=u=rwX,go=rX aic_assets/package.xml /ws_aic/src/aic/aic_assets/
+COPY --chmod=u=rwX,go=rX aic_interfaces/aic_engine_interfaces/package.xml /ws_aic/src/aic/aic_interfaces/aic_engine_interfaces/
+COPY --chmod=u=rwX,go=rX aic_description/package.xml /ws_aic/src/aic/aic_description/
+COPY --chmod=u=rwX,go=rX aic_interfaces/aic_control_interfaces/package.xml /ws_aic/src/aic/aic_interfaces/aic_control_interfaces/
+COPY --chmod=u=rwX,go=rX aic_gazebo/package.xml /ws_aic/src/aic/aic_gazebo/
+COPY --chmod=u=rwX,go=rX aic_interfaces/aic_model_interfaces/package.xml /ws_aic/src/aic/aic_interfaces/aic_model_interfaces/
+COPY --chmod=u=rwX,go=rX aic_controller/package.xml /ws_aic/src/aic/aic_controller/
+COPY --chmod=u=rwX,go=rX aic_example_policies/package.xml /ws_aic/src/aic/aic_example_policies/
+COPY --chmod=u=rwX,go=rX aic_engine/package.xml /ws_aic/src/aic/aic_engine/
+COPY --chmod=u=rwX,go=rX aic_adapter/package.xml /ws_aic/src/aic/aic_adapter/
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked --mount=type=cache,target=/var/lib/apt,sharing=locked \
   apt update && apt upgrade -y && \
   # undeclared deps
@@ -21,7 +38,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked --mount=type=cache,t
   rosdep install --from-paths src --ignore-src --rosdistro kilted -yr --skip-keys "gz-cmake3 DART libogre-dev libogre-next-2.3-dev"
 
 # Build the workspace
-COPY --chmod=u=rwX,go=rX --exclude=docker . /ws_aic/src/aic
+COPY --chmod=u=rwX,go=rX . /ws_aic/src/aic
 SHELL ["/bin/bash", "-c"]
 RUN --mount=type=cache,target=/ws_aic/build,sharing=locked \
   cd /ws_aic \

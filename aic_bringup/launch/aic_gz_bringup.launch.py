@@ -83,6 +83,12 @@ def launch_setup(context, *args, **kwargs):
     task_board_roll = LaunchConfiguration("task_board_roll")
     task_board_pitch = LaunchConfiguration("task_board_pitch")
     task_board_yaw = LaunchConfiguration("task_board_yaw")
+    nic_card_mount_0_present = LaunchConfiguration("nic_card_mount_0_present")
+    nic_card_mount_0_translation = LaunchConfiguration("nic_card_mount_0_translation")
+    nic_card_mount_0_yaw = LaunchConfiguration("nic_card_mount_0_yaw")
+    sc_port_0_present = LaunchConfiguration("sc_port_0_present")
+    sc_port_0_translation = LaunchConfiguration("sc_port_0_translation")
+    sc_port_0_yaw = LaunchConfiguration("sc_port_0_yaw")
     cable_x = LaunchConfiguration("cable_x")
     cable_y = LaunchConfiguration("cable_y")
     cable_z = LaunchConfiguration("cable_z")
@@ -281,6 +287,12 @@ def launch_setup(context, *args, **kwargs):
             "task_board_roll": task_board_roll,
             "task_board_pitch": task_board_pitch,
             "task_board_yaw": task_board_yaw,
+            "nic_card_mount_0_present": nic_card_mount_0_present,
+            "nic_card_mount_0_translation": nic_card_mount_0_translation,
+            "nic_card_mount_0_yaw": nic_card_mount_0_yaw,
+            "sc_port_0_present": sc_port_0_present,
+            "sc_port_0_translation": sc_port_0_translation,
+            "sc_port_0_yaw": sc_port_0_yaw,
         }.items(),
         condition=IfCondition(spawn_task_board),
     )
@@ -653,6 +665,48 @@ def generate_launch_description():
             "task_board_yaw",
             default_value="3.1415",
             description="Task board spawn yaw orientation (radians)",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "nic_card_mount_0_present",
+            default_value="true",
+            description="Spawn NIC card (SFP ports) on mount 0 for recording/eval scene.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "nic_card_mount_0_translation",
+            default_value="0.036",
+            description="NIC card mount 0 translation along rail (meters).",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "nic_card_mount_0_yaw",
+            default_value="0.0",
+            description="NIC card mount 0 yaw (radians).",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "sc_port_0_present",
+            default_value="true",
+            description="Spawn SC port on rail 0 for recording/eval scene.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "sc_port_0_translation",
+            default_value="0.042",
+            description="SC port 0 translation along rail (meters).",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "sc_port_0_yaw",
+            default_value="0.1",
+            description="SC port 0 yaw (radians).",
         )
     )
 

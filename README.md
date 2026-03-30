@@ -27,6 +27,8 @@ Follow the sections below to navigate through each phase of the process.
    - Run the evaluation container and set up your local workspace with Pixi.
 
 3. **💻 Develop Your Policy**
+   - Read [Build Your Policy](./docs/build_your_policy.md) for requirements, scoring, and a starter policy.
+   - **ACT route:** Record demos → train ACT → run: [ACT Route Guide](./docs/act_route_guide.md).
    - Explore the [Scene Description](./docs/scene_description.md) to learn how to customize and explore the environment.
    - Review [AIC Interfaces](./docs/aic_interfaces.md) to understand available interfaces to communicate with sensors and actuators.
    - Consult [AIC Controller](./docs/aic_controller.md) to learn about controlling the robot.
@@ -160,8 +162,12 @@ Manages trial execution, validates participant models, and collects scoring data
 * **[AIC Interfaces](./docs/aic_interfaces.md):** ROS 2 topics, services, and actions available to your policy.
 * **[AIC Controller](./docs/aic_controller.md):** Understanding the robot controller and motion commands.
 * **[Scene Description](./docs/scene_description.md):** Technical details of the simulation environment.
+* **[Eval container block diagram](./docs/eval_container_block_diagram.md):** How sim, robot, and controller interact in the eval container.
 * **[Task Board Description](./docs/task_board_description.md):** Physical layout and specifications of the task board.
 * **[Troubleshooting](./docs/troubleshooting.md):** Common issues and debugging strategies.
+* **[Setup guide](./docs/setup_guide.md):** One-time and per-session setup (image, distrobox, env).
+* **[Physical teleop hardware](./docs/physical_teleop_hardware.md):** What to buy for hardware teleop (SpaceMouse, robot arms) and compatibility.
+* **[Commands reference](./docs/commands_reference.md):** Consolidated command list (no prose).
 
 ### Reference Materials
 
