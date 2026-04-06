@@ -62,10 +62,10 @@ Ensure Gazebo and the robot are visible and the controller is up before continui
 
 Get used to controlling the robot with LeRobot before recording.
 
-From the **host** (repo root, e.g. `~/Projects/intrinsic/aic`):
+From the **host** (repo root, e.g. `~/Projects/aic`):
 
 ```bash
-cd ~/Projects/intrinsic/aic
+cd ~/Projects/aic
 export ZENOH_SESSION_CONFIG_URI="$(pwd)/docker/aic_eval/aic_zenoh_config.json5"
 
 pixi run lerobot-teleoperate \
@@ -92,7 +92,7 @@ Create a LeRobot dataset by teleoperating and recording episodes.
 2. **Run recording** (host, same `cd` and `ZENOH_SESSION_CONFIG_URI` as above):
 
 ```bash
-cd ~/Projects/intrinsic/aic
+cd ~/Projects/aic
 export ZENOH_SESSION_CONFIG_URI="$(pwd)/docker/aic_eval/aic_zenoh_config.json5"
 
 pixi run lerobot-record \
@@ -139,7 +139,7 @@ If the teleop or recording window shows **black images**, see [Troubleshooting: 
 Train an ACT policy on your dataset.
 
 ```bash
-cd ~/Projects/intrinsic/aic
+cd ~/Projects/aic
 
 pixi run lerobot-train \
   --dataset.repo_id=YOUR_HF_USER/aic_cable_insertion \
@@ -179,7 +179,7 @@ distrobox enter -r aic_eval -- /entrypoint.sh ground_truth:=false start_aic_engi
 
 **Terminal 2 – Policy (within ~30 s):**
 ```bash
-cd ~/Projects/intrinsic/aic
+cd ~/Projects/aic
 export ZENOH_SESSION_CONFIG_URI="$(pwd)/docker/aic_eval/aic_zenoh_config.json5"
 pixi run ros2 run aic_model aic_model --ros-args -p use_sim_time:=true -p policy:=aic_example_policies.ros.RunACT
 ```
@@ -196,7 +196,7 @@ RunACT loads `grkw/aic_act_policy` from Hugging Face by default.
 2. **Point RunACT at your checkpoint:** In [`aic_example_policies/aic_example_policies/ros/RunACT.py`](../aic_example_policies/aic_example_policies/ros/RunACT.py), change `repo_id` (around line 61) from `"grkw/aic_act_policy"` to your HF repo, or replace the loading logic to use a **local path** instead of `snapshot_download(repo_id=...)`, e.g.:
 
    ```python
-   policy_path = Path("/home/you/Projects/intrinsic/aic/outputs/train/act_aic_cable/checkpoints/latest")
+   policy_path = Path("/home/you/Projects/aic/outputs/train/act_aic_cable/checkpoints/latest")
    ```
 
    Ensure the config and normalizer paths match (e.g. `policy_path / "config.json"`, `policy_path / "model.safetensors"`, and the normalizer safetensors file in the same folder or the path LeRobot uses).

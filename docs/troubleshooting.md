@@ -1,5 +1,34 @@
 # Troubleshooting
 
+## Local clone path and Pixi (`PIXI_PROJECT_MANIFEST`)
+
+The docs assume a **single** clone of this repo at **`~/Projects/aic`** (see [Setup guide](./setup_guide.md) and [Commands reference](./commands_reference.md)). If you previously used another layout (e.g. **`~/Projects/intrinsic/aic`**), use **one** directory and update shells, IDE folders, and scripts to match.
+
+**Symptom:** Pixi prints a warning like:
+
+`Using local manifest …/Projects/intrinsic/aic/pixi.toml rather than …/Projects/aic/pixi.toml from environment variable PIXI_PROJECT_MANIFEST`
+
+**Cause:** `PIXI_PROJECT_MANIFEST` points at a **`pixi.toml`** that is not the manifest in your current working directory, or you have **two clones** and mixed `cd` / tooling between them.
+
+**Fix:**
+
+1. **Pick one clone** (recommended: **`~/Projects/aic`**) and remove or archive the other if you no longer need it.
+2. **Clear or align the variable** in `~/.bashrc`, `~/.profile`, Cursor/terminal env, or CI:
+   ```bash
+   unset PIXI_PROJECT_MANIFEST
+   cd ~/Projects/aic
+   pixi install
+   ```
+   If you must pin the manifest explicitly, set it to the file you actually use:
+   ```bash
+   export PIXI_PROJECT_MANIFEST="$HOME/Projects/aic/pixi.toml"
+   ```
+3. **Open a new terminal** (or reload the editor) so old values are gone, then run **`pixi install`** again from the chosen repo root.
+
+**Related:** If you see **`pixi-build-ros`** / **`ros-kilted-my-aic-policy`** errors with “The background task closed EOF; restart required”, try **`unset PIXI_PROJECT_MANIFEST`**, **`pixi clean cache`**, and **`pixi install`** once paths are consistent; upgrade Pixi with **`pixi self-update`** if it persists.
+
+---
+
 ## Low real-time factor on Gazebo
 
 The simulation is configured to run at **1.0 RTF (100% real-time factor)**, meaning simulation time should match wall-clock time. If you're experiencing lower RTF, the following sections may help diagnose and resolve the issue.

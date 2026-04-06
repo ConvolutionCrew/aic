@@ -124,7 +124,7 @@ You can share a host folder with the VM so you can edit code on the host and run
 2. Click **Add Hardware** (bottom left).
 3. Choose **Filesystem**.
 4. Set **Driver** to **virtio-9p** (or the default).
-5. **Source path:** host folder to share, e.g. `/home/rkrishnan/Projects/intrinsic`.
+5. **Source path:** host folder to share, e.g. `/home/rkrishnan/Projects` (parent of your `aic` clone).
 6. **Target path:** a tag name the guest will use, e.g. `hostshare` (no path, just a name).
 7. Click **Finish**, then start the VM.
 
@@ -148,7 +148,7 @@ echo 'hostshare /mnt/hostshare 9p trans=virtio,version=9p2000.L 0 0' | sudo tee 
 sudo mount -a
 ```
 
-**Note:** If the VM user needs to write to the share, ensure the host folder has permissions the VM can use (e.g. `chmod -R o+rX /home/rkrishnan/Projects/intrinsic` on the host, or match UIDs).
+**Note:** If the VM user needs to write to the share, ensure the host folder has permissions the VM can use (e.g. `chmod -R o+rX /home/rkrishnan/Projects` on the host, or match UIDs).
 
 ---
 
@@ -199,7 +199,7 @@ ip -4 addr show
 **From the host:** copy files into the VM (replace `vmuser@192.168.x.x` with the VM user and IP):
 
 ```bash
-scp -r /home/rkrishnan/Projects/intrinsic/aic vmuser@192.168.x.x:~/
+scp -r /home/rkrishnan/Projects/aic vmuser@192.168.x.x:~/
 ```
 
 **From the VM:** copy files to the host:

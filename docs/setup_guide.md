@@ -1,6 +1,6 @@
 # AIC Setup Guide
 
-One-time and per-session steps to get the environment ready. All commands assume repo root: `~/Projects/intrinsic/aic`.
+One-time and per-session steps to get the environment ready. All commands assume repo root: `~/Projects/aic`.
 
 ---
 
@@ -16,7 +16,7 @@ One-time and per-session steps to get the environment ready. All commands assume
 Then:
 
 ```bash
-cd ~/Projects/intrinsic/aic
+cd ~/Projects/aic
 pixi install
 ```
 
@@ -27,7 +27,7 @@ pixi install
 **1. Build the eval image (has task board + slots for recording):**
 
 ```bash
-cd ~/Projects/intrinsic/aic
+cd ~/Projects/aic
 docker build -f docker/aic_eval/Dockerfile -t aic_eval:local .
 ```
 
@@ -46,13 +46,13 @@ distrobox create -r --nvidia -i aic_eval:local aic_eval
 ## Every new terminal (host) – env for policy / teleop / record
 
 ```bash
-cd ~/Projects/intrinsic/aic
+cd ~/Projects/aic
 export DBX_CONTAINER_MANAGER=docker
 export ZENOH_SESSION_CONFIG_URI="$(pwd)/docker/aic_eval/aic_zenoh_config.json5"
 export ROS2_USE_SIM_TIME=1
 ```
 
-*(Optional: add these to `~/.bashrc` or a small `source ~/Projects/intrinsic/aic/setup_env.sh`.)*
+*(Optional: add these to `~/.bashrc` or a small `source ~/Projects/aic/setup_env.sh`.)*
 
 ---
 
@@ -102,4 +102,4 @@ Or use `lerobot-record` with your dataset name (see [commands_reference.md](./co
 
 - **Eval container exists:** `distrobox list` → `aic_eval`
 - **Image present:** `docker images | grep aic_eval`
-- **Pixi env:** `cd ~/Projects/intrinsic/aic && pixi run ros2 --help` (no “command not found”)
+- **Pixi env:** `cd ~/Projects/aic && pixi run ros2 --help` (no “command not found”)

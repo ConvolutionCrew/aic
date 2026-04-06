@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Source this or run: source setup_env.sh
-# From repo root: ~/Projects/intrinsic/aic
+# From repo root: ~/Projects/aic
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 cd "$SCRIPT_DIR" || exit 1
 export DBX_CONTAINER_MANAGER=docker

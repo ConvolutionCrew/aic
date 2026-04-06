@@ -55,7 +55,7 @@ Base class and types: `aic_model.policy.Policy`, `GetObservationCallback`, `Move
 
 ## Run the Starter Policy
 
-From the repo root (e.g. `~/Projects/intrinsic/aic`):
+From the repo root (e.g. `~/Projects/aic`):
 
 **Terminal 1 – Eval container:**
 ```bash
@@ -65,7 +65,7 @@ distrobox enter -r aic_eval -- /entrypoint.sh ground_truth:=false start_aic_engi
 
 **Terminal 2 – Your policy (start within ~30 s of the engine starting):**
 ```bash
-cd ~/Projects/intrinsic/aic
+cd ~/Projects/aic
 export ZENOH_SESSION_CONFIG_URI="$(pwd)/docker/aic_eval/aic_zenoh_config.json5"
 pixi run ros2 run aic_model aic_model --ros-args -p use_sim_time:=true -p policy:=my_aic_policy.ros.InsertCableStarter
 ```
