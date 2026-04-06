@@ -11,7 +11,10 @@ The simulation environment is defined in the [`aic_description`](./../aic_descri
 
 ### Robot
 
-The challenge utilizes a **Universal Robots UR5e** robotic arm, equipped with a **Robotiq Hand-E gripper** and an **Axia80 force-torque sensor**.
+The challenge utilizes a **Universal Robots UR5e** robotic arm, equipped with the following hardware:
+* **Gripper:** **Robotiq Hand-E**
+* **Force-Torque Sensor:** **ATI AXIA80-M20**
+* **Camera:** **Basler acA2440-20gc** with **Edmunds lens 58-000** (Resolution: 1152x1024, Frame Rate: 20 FPS)
 
 * **Configuration:** The robot's physical properties and setup are defined in the [`ur_gz.urdf.xacro`](../aic_description/urdf/ur_gz.urdf.xacro) file.
 * **Control:** The robot is operated via the `aic_controller`. For detailed interface and usage instructions, please refer to the [AIC Controller documentation](./aic_controller.md).
@@ -148,13 +151,16 @@ The simulation includes a world plugin that automatically exports the complete w
 > [!NOTE]
 > **MuJoCo Integration:** The AIC environment supports exporting and training policies natively in MuJoCo. Exported scenarios can be converted to MJCF format and run with the same ROS 2 control interfaces used in Gazebo. For detailed instructions on simulation setup, converting Gazebo worlds, and using `ros2_control` in MuJoCo, see the [MuJoCo Integration Guide](../aic_utils/aic_mujoco/README.md).
 
+> [!NOTE]
+> **Isaac Lab Integration:** The AIC environment can also be loaded in NVIDIA's Isaac Lab for data collection and training. For details, see the [Isaac Lab Integration Guide](../aic_utils/aic_isaac/README.md).
+
 ---
 
 ## Taring before Training
 
 At the start of each training episode (i.e. before teleoperation and before spawning any cables in the environment), ensure that the Force/Torque Sensor (F/T Sensor) is tared using the following service call:
 ```bash
-ros2 service call /aic_controller/tare_ft_sensor std_srvs/srv/Trigger
+ros2 service call /aic_controller/tare_force_torque_sensor std_srvs/srv/Trigger
 ```
 
 ---
